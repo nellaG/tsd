@@ -14,3 +14,8 @@ $ ./tsd 1833561154
 $ gotest -v -cover ./...  # install gotest
 ```
 
+## Install from go.pkg.dev
+```
+$ go install github.com/nellaG/tsd/cmd/tsd@{version}
+```
+`
