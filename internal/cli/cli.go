@@ -3,14 +3,16 @@ package cli
 import (
 	"fmt"
 
+	"github.com/nellaG/tsd/internal/build"
 	"github.com/nellaG/tsd/internal/converter"
 	"github.com/urfave/cli/v2"
 )
 
 func NewApp() *cli.App {
 	app := &cli.App{
-		Name:  "tsd",
-		Usage: "Easily convert UNIX timestamp to date ISO8601 format",
+		Name:    "tsd",
+		Usage:   "Easily convert UNIX timestamp to date ISO8601 format",
+		Version: build.Version,
 		Flags: []cli.Flag{
 			&cli.BoolFlag{
 				Name:    "test",
