@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+   runs-on: ubuntu-latest
+   steps:
+   - uses: actions/checkout@v2
+   - name: Set up Go
+     uses: actions/setup-go@v2
+     with:
+       go-version: 1.22
+   - name: Build
+     run: |
+       GOOS=windows GOARCH=amd64 go build -o tsd_${{ github.ref_name }}_windows_amd64.exe ./cmd/tsd
+       GOOS=linux GOARCH=amd64 go build -o tsd_${{ github.ref_name }}_linux_amd64 ./cmd/tsd
+       GOOS=darwin GOARCH=amd64 go build -o tsd_${{ github.ref_name }}_darwin_amd64 ./cmd/tsd
+   - name: Release
+     uses: softprops/action-gh-release@v1
+     with:
+       files: |
+         tsd_${{ github.ref_name }}_windows_amd64.exe
+         tsd_${{ github.ref_name }}_linux_amd64
+         tsd_${{ github.ref_name }}_darwin_amd64
+     env:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
